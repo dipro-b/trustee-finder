@@ -1,0 +1,29 @@
+Notes for Tax Tools:
+
+ - Parse a machine readable Form 990 and get certain information
+ - Build a list of directors as a CSV file 
+ - Build a list of grantees (is that a word?) 
+
+Classes/Design:
+ - TaxToolsMain -> main class that executes other tools
+ - TaxForm --> interface to encapsulate form information
+ - BruteTaxForm --> class that uses brute force to find relevant information
+ 
+ Algorithm for finding names:
+ 1. Create dict with known western names
+ 2. Check words against dict... If you find a name, you might be at a list of directors!!
+ 3. If you see one name, you can figure out which other words are also names
+
+ Limitations:
+ - names in trie are first names: algo only works if some of the names in the list are 
+   common first names that are in our corpus. 
+ 
+ todo:
+ 1. Find corpus of names to create dict:
+ 		https://www.cs.cmu.edu/Groups/AI/util/areas/nlp/corpora/names/male.txt
+ 		https://www.cs.cmu.edu/Groups/AI/util/areas/nlp/corpora/names/female.txt
+ 2. Create trie data structure
+ 3. Create data structure to hold a line pattern
+ 
+ algo: 
+ 1. add lines with names to a set, use that to determine which are the directors. Use comparator to sort them together. 
