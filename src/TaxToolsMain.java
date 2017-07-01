@@ -9,7 +9,7 @@ public class TaxToolsMain {
 			String filename = "data/JohnLocke2013.pdf";
 
 			// instantiate object
-			BruteTaxForm myForm = new BruteTaxForm(filename);
+//			BruteTaxForm myForm = new BruteTaxForm(filename);
 
 //			System.out.println(myForm.getAllText());
 
@@ -17,15 +17,10 @@ public class TaxToolsMain {
 			
 			OnlineFilingNavigator nav = new OnlineFilingNavigator("860292099");
 			String myURL = nav.getIndexURL("2013");
-			try {
-				nav.getIdentifier(nav.MY_EIN, myURL);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+			nav.getIdentifier(nav.MY_EIN, myURL);
 		}
 
-		catch (IOException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -20,23 +22,33 @@ public class TaxXMLHandler extends DefaultHandler {
 	boolean hasName = false;
 	boolean hasJob = false;
 	
+	// set of all XML valid elements
+	String[] sections = {"form990partviisectiona", "form990partviisectionagrp"};
+	HashSet<String> sectionSet = new HashSet<String>(Arrays.asList(sections));
+	
+	String[] names = {"personnm", "nameperson"};
+	HashSet<String> nameSet = new HashSet<String>(Arrays.asList(names));
+	
+	String[] jobs = {"title", "titletxt"};
+	HashSet<String> jobSet = new HashSet<String>(Arrays.asList(jobs));
+	
 	@Override
 	public void startElement(String uri,  String localName, String qName, Attributes attributes) throws SAXException {
-
+		
 		// if trustee section, initialize a trustee
-		if (qName.equalsIgnoreCase("Form990PartVIISectionAGrp")) {
+		if (sectionSet.contains(qName.toLowerCase())) {
 			isTrustee = true;
 			dummyTrustee = new Trustee();
 			if (trusteeList == null)
 				trusteeList = new ArrayList<Trustee>();
 		}
-		else if (qName.equalsIgnoreCase("PersonNm") && (isTrustee)) {
+		else if (nameSet.contains(qName.toLowerCase())  && (isTrustee)) {
 			hasName = true;
 			if (dummyTrustee == null) {
 				dummyTrustee = new Trustee();
 			}
 		}
-		else if (qName.equalsIgnoreCase("TitleTxt") && (isTrustee)) {
+		else if (jobSet.contains(qName.toLowerCase()) && (isTrustee)) {
 			hasJob = true;
 			if (dummyTrustee == null) {
 				dummyTrustee = new Trustee();
@@ -48,15 +60,13 @@ public class TaxXMLHandler extends DefaultHandler {
 	public void endElement(String uri,  String localName, String qName) throws SAXException {
 		
 		// null test is in case xml file is malformed/messy
-		if (qName.equalsIgnoreCase("Form990PartVIISectionAGrp") && (dummyTrustee != null)) {
+		if (sectionSet.contains(qName.toLowerCase()) && (dummyTrustee != null)) {
 			trusteeList.add(dummyTrustee);
 			dummyTrustee = null;
-			System.out.println("Trustee added!");
 		}
-		else if (qName.equalsIgnoreCase("TitleTxt")) {
+		else if (jobSet.contains(qName.toLowerCase())) {
 			trusteeList.add(dummyTrustee);
 			dummyTrustee = null;
-			System.out.println("Trustee added!");
 		}
 	}
 	

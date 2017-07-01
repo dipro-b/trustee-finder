@@ -30,7 +30,6 @@ public class OnlineFilingNavigator {
 		String token = "";
 		long sysTime = System.currentTimeMillis();
 		long now;
-		long time;
 		while (reader.hasNext()) {
 			// timer
 			now = System.currentTimeMillis();
@@ -84,12 +83,13 @@ public class OnlineFilingNavigator {
 	
 	public static void main(String[] args) {
 		try {
-//			String EIN = "860292099";
-//			String url = getIndexURL("2014");
-//			String id = getIdentifier(EIN, url);
+//			String EIN = "860292099"; // Safari Club Foundation
+			String EIN = "860974183"; // Safari Club International
+			String url = getIndexURL("2014");
+			String id = getIdentifier(EIN, url);
 //			System.out.println(id);
 			
-			String id = "https://s3.amazonaws.com/irs-form-990/201441359349303644_public.xml";
+//			String id = "https://s3.amazonaws.com/irs-form-990/201441359349303644_public.xml";
 			getTrustees(id);
 		}
 		catch (Exception e) {
