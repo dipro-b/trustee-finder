@@ -1,10 +1,8 @@
-package com.taxtools.main;
-
 import java.io.IOException;
 
 public class TaxToolsMain {
 
-	static public void main(String args[]) {
+	public static void main(String args[]) {
 		try {
 
 			// different files
@@ -15,7 +13,16 @@ public class TaxToolsMain {
 
 //			System.out.println(myForm.getAllText());
 
-			System.out.println(myForm.getPeople());
+//			System.out.println(myForm.getPeople());
+			
+			OnlineFilingNavigator nav = new OnlineFilingNavigator("860292099");
+			String myURL = nav.getIndexURL("2013");
+			try {
+				nav.getIdentifier(nav.MY_EIN, myURL);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		catch (IOException e) {

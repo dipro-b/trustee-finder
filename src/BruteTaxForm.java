@@ -1,5 +1,3 @@
-package com.taxtools.main;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -249,7 +247,7 @@ public class BruteTaxForm implements ITaxForm {
 
 				// if line contains a name, add to set and move on
 				if (isName(word)) {
-					System.out.println("Found a name: " + word);
+//					System.out.println("Found a name: " + word);
 					names.add(previousLine);
 					names.add(currentLine);
 					names.add(nextLine);
